@@ -1,0 +1,5 @@
+spring:
+  data:
+    elasticsearch:
+      cluster-nodes: www.shanshuan.com:9300
+      cluster-name: wangzifeng
