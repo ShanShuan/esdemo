@@ -1,16 +1,23 @@
 package com.shanshuan;
 
 import com.shanshuan.pojo.Item;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.awt.print.PageFormat;
-import java.awt.print.Pageable;
 import java.awt.print.Printable;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +30,8 @@ import java.util.List;
 public class EsTest {
     @Autowired
     ElasticsearchTemplate elasticsearchTemplate;
-@Autowired
-ItemRepository itemRepository;
+    @Autowired
+    ItemRepository itemRepository;
 
     @Test
     public void test() {
@@ -65,6 +72,17 @@ ItemRepository itemRepository;
     public void findBy() {
         List<Item> byPriceBetween = itemRepository.findByPriceBetween(60d, 90d);
         for (Item one: byPriceBetween) {
+            System.out.println(one.toString());
+        }
+
+    }
+
+    @Test
+    public void findByfz() {
+        MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("title", "豪车");
+        SearchQuery searchQuery=new NativeSearchQueryBuilder().build();
+        Page<Item> search = itemRepository.search(searchQuery);
+        for (Item one: search) {
             System.out.println(one.toString());
         }
     }
