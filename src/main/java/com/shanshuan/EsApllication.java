@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationContext;
 public class EsApllication {
     public static void main(String[] args) {
         System.out.println();
+        System.out.println("11111");
         SpringApplication.run(EsApllication.class);
     }
 }
